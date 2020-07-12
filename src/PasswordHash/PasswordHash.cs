@@ -30,10 +30,14 @@ namespace PasswordHash
 			return match;
 		}
 
-		public static PasswordHash From(string plaintext, uint iterations, uint hashSize)
+		public static PasswordHash From(string plaintext, uint iterations, uint hashSizeInBytes)
 		{
-			var salt = CreateSalt(hashSize);
-			var hash = CreateHash(plaintext, salt, iterations, hashSize);
+			if (plaintext == null)
+			{
+				throw new ArgumentNullException();
+			}
+			var salt = CreateSalt(hashSizeInBytes);
+			var hash = CreateHash(plaintext, salt, iterations, hashSizeInBytes);
 
 			return new PasswordHash(hash, salt, iterations);
 		}
@@ -58,13 +62,13 @@ namespace PasswordHash
 		private readonly byte[] _hash;
 		private readonly byte[] _salt;
 
-		private static byte[] CreateHash(string plaintext, byte[] salt, uint iterations, uint hashSize)
+		private static byte[] CreateHash(string plaintext, byte[] salt, uint iterations, uint hashSizeInBytes)
 		{
 			var plaintextBytes = Encoding.Unicode.GetBytes(plaintext);
 
 			Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(plaintextBytes, salt, Convert.ToInt32(iterations));
 
-			return pbkdf2.GetBytes(Convert.ToInt32(hashSize));
+			return pbkdf2.GetBytes(Convert.ToInt32(hashSizeInBytes));
 		}
 
 		private static byte[] CreateSalt(uint saltSize)

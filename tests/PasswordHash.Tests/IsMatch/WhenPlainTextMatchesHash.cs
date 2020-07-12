@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace PasswordHash.Tests
+namespace PasswordHash.Tests.IsMatch
 {
 	public class WhenPlainTextMatchesHash
 	{
