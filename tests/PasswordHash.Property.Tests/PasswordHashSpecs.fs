@@ -12,8 +12,9 @@ let config =
 let properties = testList "PasswordHash properties" [
     testProperty "Hash matches plaintext" <|
         fun plaintext ->
-            not (isNull plaintext) ==>
-                lazy (
-                        let hash = PasswordHash.From(plaintext, 100u, 128u)
-                        hash.IsMatch(plaintext))
+            not (isNull plaintext)
+            ==>
+            lazy
+                (let hash = PasswordHash.From(plaintext, 100u, 128u)
+                hash.IsMatch(plaintext))
 ]
