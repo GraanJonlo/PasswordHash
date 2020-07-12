@@ -6,20 +6,16 @@ namespace PasswordHash
 {
 	public class PasswordHash
 	{
-		private readonly byte[] _hash;
-		private readonly byte[] _salt;
-		private readonly uint _iterations;
-
 		public PasswordHash(byte[] hash, byte[] salt, uint iterations)
 		{
 			_hash = hash;
 			_salt = salt;
-			_iterations = iterations;
+			Iterations = iterations;
 		}
 
 		public bool IsMatch(string plaintext)
 		{
-			var testHash = CreateHash(plaintext, _salt, _iterations, Convert.ToUInt32(_salt.Length));
+			var testHash = CreateHash(plaintext, _salt, Iterations, Convert.ToUInt32(_salt.Length));
 
 			var match = true;
 
@@ -42,10 +38,25 @@ namespace PasswordHash
 			return new PasswordHash(hash, salt, iterations);
 		}
 
+		public byte[] Hash
+		{
+			get => (byte[])_hash.Clone();
+		}
+
+		public byte[] Salt
+		{
+			get => (byte[])_salt.Clone();
+		}
+
+		public uint Iterations { get; }
+
 		public override string ToString()
 		{
 			return Convert.ToBase64String(_hash);
 		}
+
+		private readonly byte[] _hash;
+		private readonly byte[] _salt;
 
 		private static byte[] CreateHash(string plaintext, byte[] salt, uint iterations, uint hashSize)
 		{
