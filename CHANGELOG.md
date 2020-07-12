@@ -7,11 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2020-07-12
+
 ### Added
 
 - PasswordHash object with constructors, static factory and IsMatch method.
 - Properties to make it easier to get password hash state for persisting.
 
-### Changed
-
-### Removed
+[Unreleased]: https://github.com/GraanJonlo/PasswordHash/compare/v0.1.0...HEAD
+[0.0.1]: https://github.com/GraanJonlo/PasswordHash/releases/tag/v0.1.0
