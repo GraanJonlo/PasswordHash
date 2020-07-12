@@ -13,23 +13,6 @@ namespace PasswordHash
 			Iterations = iterations;
 		}
 
-		public bool IsMatch(string plaintext)
-		{
-			var testHash = CreateHash(plaintext, _salt, Iterations, Convert.ToUInt32(_salt.Length));
-
-			var match = true;
-
-			for (int i = 0; i < _hash.Length; i++)
-			{
-				if (testHash[i] != _hash[i])
-				{
-					match = false;
-				}
-			}
-
-			return match;
-		}
-
 		public static PasswordHash From(string plaintext, uint iterations, uint hashSizeInBytes)
 		{
 			if (plaintext == null)
@@ -40,6 +23,24 @@ namespace PasswordHash
 			var hash = CreateHash(plaintext, salt, iterations, hashSizeInBytes);
 
 			return new PasswordHash(hash, salt, iterations);
+		}
+
+		public bool IsMatch(string plaintext)
+		{
+			var testHash = CreateHash(plaintext, _salt, Iterations, Convert.ToUInt32(_salt.Length));
+
+			var match = true;
+
+			// This is deliberately NOT optimised
+			for (int i = 0; i < _hash.Length; i++)
+			{
+				if (testHash[i] != _hash[i])
+				{
+					match = false;
+				}
+			}
+
+			return match;
 		}
 
 		public byte[] Hash
