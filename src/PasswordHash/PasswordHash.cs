@@ -24,6 +24,12 @@ namespace PasswordHash
 			{
 				throw new ArgumentOutOfRangeException(nameof(iterations), "Iterations must be greater than zero");
 			}
+
+			if (hashSizeInBytes < 8)
+			{
+				throw new ArgumentException("Salt is not at least eight bytes", nameof(hashSizeInBytes));
+			}
+
 			var salt = CreateSalt(hashSizeInBytes);
 			var hash = CreateHash(plaintext, salt, iterations, hashSizeInBytes);
 
