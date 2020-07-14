@@ -5,16 +5,22 @@ open FsCheck
 
 open PasswordHash
 
-let config =
-    { FsCheckConfig.defaultConfig with maxTest = 10000 }
-
 [<Tests>]
 let properties = testList "PasswordHash properties" [
-    testProperty "Hash matches plaintext" <|
+    testProperty "Hash matches for not null plaintext" <|
         fun plaintext ->
             not (isNull plaintext)
             ==>
             lazy
                 (let hash = PasswordHash.From(plaintext, 100u, 128u)
-                hash.IsMatch(plaintext))
+                 hash.IsMatch(plaintext))
+
+    testProperty "Hash matches for positive iterations" <|
+        fun iterations ->
+            iterations > 0u
+            ==>
+            lazy
+                (let plaintext = "Fo0!"
+                 let hash = PasswordHash.From(plaintext, iterations, 128u)
+                 hash.IsMatch(plaintext))
 ]

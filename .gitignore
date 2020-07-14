@@ -16,6 +16,7 @@ _ReSharper*/
 _NCrunch_*
 .*crunch*.local.xml
 nCrunchTemp_*
+*.v3.ncrunchsolution
 *.v3.ncrunchsolution.user
 
 # NuGet Packages

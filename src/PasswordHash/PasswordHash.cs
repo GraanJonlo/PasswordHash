@@ -17,7 +17,12 @@ namespace PasswordHash
 		{
 			if (plaintext == null)
 			{
-				throw new ArgumentNullException();
+				throw new ArgumentNullException(nameof(plaintext), "Plaintext cannot be null");
+			}
+
+			if (iterations == 0u)
+			{
+				throw new ArgumentOutOfRangeException(nameof(iterations), "Iterations must be greater than zero");
 			}
 			var salt = CreateSalt(hashSizeInBytes);
 			var hash = CreateHash(plaintext, salt, iterations, hashSizeInBytes);

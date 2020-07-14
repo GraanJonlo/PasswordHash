@@ -19,7 +19,6 @@ dotnet test
 
 Runs both the unit tests, PasswordHash.Tests, and property tests, PasswordHash.Property.Tests.
 
-
 ## Usage
 
 A hash can be created via a static factory:
