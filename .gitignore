@@ -51,3 +51,6 @@ dist/
 # Paket tool store
 .paket/.store
 .paket/paket
+
+# BenchmarkDotNet
+BenchmarkDotNet.Artifacts/
