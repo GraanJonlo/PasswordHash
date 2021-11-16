@@ -85,7 +85,7 @@ namespace PasswordHash
 
 		private static byte[] CreateSalt(uint saltSize)
 		{
-			RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
+			var provider = new RNGCryptoServiceProvider();
 			byte[] salt = new byte[saltSize];
 			provider.GetBytes(salt);
 
